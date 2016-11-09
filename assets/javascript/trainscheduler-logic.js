@@ -42,12 +42,12 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	var trainFirstTime = childSnapshot.val().firstTime;
 	var trainFrequency = childSnapshot.val().frequency;
 
-	var trainFirstTimePretty = moment.unix(trainFirstTime).format("HH:mm");
+	var trainFirstTimePretty = moment.unix(trainFirstTime).format("hh:mm a");
 
 	var trainNextArrival;
 	var trainMinutesAway;
 
-	var trainFirstTimeConverted = moment(trainFirstTimePretty,"HH:mm").subtract(1, "years");
+	var trainFirstTimeConverted = moment(trainFirstTimePretty,"hh:mm a").subtract(1, "years");
 
 	var currentTime = moment();
 
@@ -59,7 +59,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 
 	var trainNextArrival = moment().add(trainMinutesAway, "minutes");
 
-	var trainNextArrivalPretty = moment(trainNextArrival).format("HH:mm");
+	var trainNextArrivalPretty = moment(trainNextArrival).format("hh:mm a");
 
 	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainFrequency + "</td><td>" + trainNextArrivalPretty  + "</td><td>" + trainMinutesAway + "</td></tr>");
 
