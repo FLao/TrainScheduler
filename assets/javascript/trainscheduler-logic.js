@@ -25,11 +25,6 @@ $("#addTrainBtn").on("click", function(){
 
 	database.ref().push(newTrain);
 
-	console.log(newTrain.name);
-	console.log(newTrain.destination);
-	console.log(newTrain.firstTime);
-	console.log(newTrain.frequency);
-
 	alert("Train successfully added");
 
 	$("#trainNameInput").val("");
@@ -42,41 +37,27 @@ $("#addTrainBtn").on("click", function(){
 
 database.ref().on("child_added", function(childSnapshot, prevChildKey){
 
-	console.log(childSnapshot.val());
-
 	var trainName = childSnapshot.val().name;
 	var trainDestination = childSnapshot.val().destination;
 	var trainFirstTime = childSnapshot.val().firstTime;
 	var trainFrequency = childSnapshot.val().frequency;
 
-	console.log(trainName);
-	console.log(trainDestination);
-	console.log(trainFirstTime);
-	console.log(trainFrequency);
-
 	var trainFirstTimePretty = moment.unix(trainFirstTime).format("HH:mm");
-	console.log("First train time is: " + trainFirstTimePretty);
 
 	var trainNextArrival;
 	var trainMinutesAway;
 
 	var trainFirstTimeConverted = moment(trainFirstTimePretty,"HH:mm").subtract(1, "years");
-	console.log(trainFirstTimeConverted);
 
 	var currentTime = moment();
-	console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
 
 	var diffTime = moment().diff(moment(trainFirstTimeConverted), "minutes");
-	console.log("DIFFERENCE IN TIME: " + diffTime);
 
 	var trainRemainder = diffTime % trainFrequency;
-	console.log(trainRemainder);
 
 	var trainMinutesAway = trainFrequency - trainRemainder;
-	console.log("MINUTES TILL TRAIN: " + trainMinutesAway);
 
 	var trainNextArrival = moment().add(trainMinutesAway, "minutes");
-	console.log("ARRIVAL TIME: " + moment(trainNextArrival).format("HH:mm"));
 
 	var trainNextArrivalPretty = moment(trainNextArrival).format("HH:mm");
 
